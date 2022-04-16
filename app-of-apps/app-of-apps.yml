@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps
+  namespace: argocd
+spec:
+  destination:
+    name: gke
+    namespace: argocd
+  project: core-utilities
+  source:
+    path: app-of-apps/apps
+    repoURL: https://github.com/salineselin/kube-monorepo
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      selfHeal: true
