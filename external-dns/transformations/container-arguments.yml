@@ -1,0 +1,15 @@
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: "--domain-filter=nuggies.life"
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: "--provider=google"
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: "--google-project=elite-protocol-319303"
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: "--txt-owner-id=home"
+- op: add
+  path: /spec/template/spec/containers/0/image
+  value: "k8s.gcr.io/external-dns/external-dns:v0.10.2"
