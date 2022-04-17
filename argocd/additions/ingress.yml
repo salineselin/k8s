@@ -8,6 +8,7 @@ metadata:
     kubernetes.io/tls.acme: "true"
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    cert-manager.io/cluster-issuer: nuggies-life
 spec:
   rules:
     - host: argocd.nuggies.life
@@ -20,7 +21,7 @@ spec:
                 name: argocd-server
                 port:
                   name: https
-  # tls:
-  #   - hosts:
-  #       - argocd.nuggies.life
-  #     secretName: argocd-secret
+  tls:
+    - hosts:
+        - argocd.nuggies.life
+      secretName: argocd-secret
