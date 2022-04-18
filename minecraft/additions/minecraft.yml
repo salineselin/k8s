@@ -99,7 +99,7 @@ spec:
             - name: MODE
               value: "survival"
             - name: MOTD
-              value: "Welcome to Minecraft on Kubernetes!"
+              value: "hi bb"
             - name: PVP
               value: "false"
             - name: LEVEL_TYPE
