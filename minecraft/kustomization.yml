@@ -4,10 +4,7 @@ kind: Kustomization
 namespace: bree-n-me-minecraft
 
 bases:
-  - additions/minecraft.yml
-# patches:
-#   - path: transformations/container-arguments.yml
-#     target:
-#       group: apps
-#       kind: Deployment
-#       name: external-dns
+  - additions/namespace.yml
+  - additions/pvc.yml
+  - additions/service.yml
+  - additions/statefulset.yml
