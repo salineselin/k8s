@@ -8,8 +8,8 @@ metadata:
 spec:
   serviceName: bree-n-me-minecraft
   replicas: 1
-  strategy:
-    type: Recreate
+  updateStrategy:
+    type: OnDelete
   selector:
     matchLabels:
       app: bree-n-me-minecraft
@@ -28,7 +28,7 @@ spec:
           resources:
             requests:
               cpu: 500m
-              memory: 512Mi
+              memory: 2048Mi
           readinessProbe:
             tcpSocket:
               port: 25565
