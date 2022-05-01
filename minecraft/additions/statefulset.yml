@@ -27,8 +27,8 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              cpu: 500m
-              memory: 4096Mi
+              cpu: 1024m
+              memory: 8192Mi
           readinessProbe:
             tcpSocket:
               port: 25565
@@ -107,7 +107,7 @@ spec:
             - name: ONLINE_MODE
               value: "true"
             - name: MEMORY
-              value: "4096M"
+              value: "8192M"
             - name: JVM_OPTS
               value: ""
             - name: JVM_XX_OPTS
