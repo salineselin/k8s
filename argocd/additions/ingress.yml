@@ -8,10 +8,10 @@ metadata:
     kubernetes.io/tls.acme: "true"
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    cert-manager.io/cluster-issuer: nuggies-life
+    cert-manager.io/cluster-issuer: nuggies-life-staging
 spec:
   rules:
-    - host: argocd.nuggies.life
+    - host: whatever.nuggies.life
       http:
         paths:
           - path: /
@@ -21,7 +21,20 @@ spec:
                 name: argocd-server
                 port:
                   name: https
-  tls:
-    - hosts:
-        - argocd.nuggies.life
-      secretName: argocd-secret
+  # tls:
+  #   - hosts:
+  #       - whatever.nuggies.life
+  #     secretName: argocd-tls
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: argocd-nuggies-life
+#   namespace: argocd
+# spec:
+#   secretName: argocd-secret
+#   issuerRef:
+#     # The issuer created previously
+#     name: nuggies-life
+#   dnsNames:
+#     - argocd.nuggies.life
