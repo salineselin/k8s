@@ -27,6 +27,9 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
+              cpu: 512m
+              memory: 4096Mi
+            limits:
               cpu: 1024m
               memory: 8192Mi
           readinessProbe:
