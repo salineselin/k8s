@@ -7,13 +7,12 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-gcp-dns
     networking.gke.io/v1beta1.FrontendConfig: argocd-frontend-config
 spec:
-  ingressClassName: gce
   rules:
     - host: argocd.salinesel.in
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          - path: /*
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: argocd-server
@@ -22,4 +21,4 @@ spec:
   tls:
     - hosts:
         - argocd.salinesel.in
-      secretName: argocd-secret
+      secretName: argocd-secret-tls
