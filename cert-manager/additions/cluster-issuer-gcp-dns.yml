@@ -1,14 +1,14 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: gcp-dns
+  name: letsencrypt-gcp-dns
   namespace: cert-manager
 spec:
   acme:
     email: salineselin@gmail.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: nuggies-life
+      name: letsencrypt-gcp-dns
     solvers:
       - dns01:
           cloudDNS:

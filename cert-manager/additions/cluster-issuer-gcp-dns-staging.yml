@@ -1,14 +1,14 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: nuggies-life-staging
+  name: letsencrypt-gcp-dns-staging
   namespace: cert-manager
 spec:
   acme:
     email: salineselin@gmail.com
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: nuggies-life-staging
+      name: letsencrypt-gcp-dns-staging
     solvers:
       - dns01:
           cloudDNS:

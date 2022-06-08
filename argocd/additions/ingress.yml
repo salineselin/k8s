@@ -4,9 +4,10 @@ metadata:
   name: argocd-server-ingress
   namespace: argocd
   annotations:
-    cert-manager.io/cluster-issuer: gcp-dns
+    cert-manager.io/cluster-issuer: letsencrypt-gcp-dns
     networking.gke.io/v1beta1.FrontendConfig: argocd-frontend-config
 spec:
+  ingressClassName: gce
   rules:
     - host: argocd.salinesel.in
       http:
