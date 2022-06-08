@@ -4,18 +4,17 @@ metadata:
   name: argocd-server-ingress
   namespace: argocd
   annotations:
-    kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls.acme: "true"
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    cert-manager.io/cluster-issuer: nuggies-life-staging
+    cert-manager.io/cluster-issuer: gcp-dns
+    networking.gke.io/v1beta1.FrontendConfig: argocd-frontend-config
 spec:
   rules:
-    - host: whatever.nuggies.life
+    - host: argocd.salinesel.in
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          - path: /*
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: argocd-server
@@ -25,16 +24,3 @@ spec:
   #   - hosts:
   #       - whatever.nuggies.life
   #     secretName: argocd-tls
-# ---
-# apiVersion: cert-manager.io/v1
-# kind: Certificate
-# metadata:
-#   name: argocd-nuggies-life
-#   namespace: argocd
-# spec:
-#   secretName: argocd-secret
-#   issuerRef:
-#     # The issuer created previously
-#     name: nuggies-life
-#   dnsNames:
-#     - argocd.nuggies.life

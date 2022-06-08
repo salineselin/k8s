@@ -1,0 +1,4 @@
+# this insecure flag is necessary to terminate TLS for GRPC and HTTPS at the ingress in GKE.
+- op: add
+  path: /spec/template/spec/containers/0/command/-
+  value: "--insecure"

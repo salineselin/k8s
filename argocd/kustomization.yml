@@ -4,5 +4,18 @@ kind: Kustomization
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.3.3/manifests/install.yaml
   - additions/ingress.yml
+  - additions/backendConfig.yml
+  - additions/frontendConfig.yml
 
 namespace: argocd
+
+patches:
+  - path: transformations/modify-server-service.yml
+    target:
+      kind: Service
+      name: argocd-server
+  - path: transformations/enable-server-insecure.yml
+    target:
+      group: apps
+      kind: Deployment
+      name: argocd-server
