@@ -4,8 +4,6 @@ metadata:
   name: argocd-server-ingress
   namespace: argocd
   annotations:
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     cert-manager.io/cluster-issuer: gcp-dns
     networking.gke.io/v1beta1.FrontendConfig: argocd-frontend-config
 spec:
