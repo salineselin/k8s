@@ -20,7 +20,3 @@ spec:
                 name: argocd-server
                 port:
                   name: https
-  # tls:
-  #   - hosts:
-  #       - whatever.nuggies.life
-  #     secretName: argocd-tls
