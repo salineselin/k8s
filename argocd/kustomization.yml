@@ -26,4 +26,4 @@ patches:
   - path: transformations/map-rbac.yml
     target:
       kind: ConfigMap
-      name: argocd-cm
+      name: argocd-rbac-cm
