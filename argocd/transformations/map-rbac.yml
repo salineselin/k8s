@@ -1,0 +1,11 @@
+- op: add
+  path: /data
+  value:
+    policy.default: ""
+    policy.csv: |
+      p, role:selin, applications, *, */*, allow
+      p, role:selin, clusters, *, *, allow
+      p, role:selin, repositories, *, *, allow
+      p, role:selin, projects, *, *, allow
+
+      g, selin, role:selin
