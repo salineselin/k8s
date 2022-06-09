@@ -19,3 +19,7 @@ patches:
       group: apps
       kind: Deployment
       name: argocd-server
+  - path: transformations/add-account.yml
+    target:
+      kind: ConfigMap
+      name: argocd-cm
