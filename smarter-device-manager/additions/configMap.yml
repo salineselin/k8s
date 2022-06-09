@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: smarter-device-manager-rpi
-data:
-  conf.yaml: |
-    - devicematch: ^fuse$
-      nummaxdevices: 20
