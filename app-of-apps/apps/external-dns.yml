@@ -12,3 +12,9 @@ spec:
     path: external-dns
     repoURL: https://github.com/salineselin/kube-monorepo
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
