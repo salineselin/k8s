@@ -1,3 +1,4 @@
 - op: add
-  path: /data/accounts.salineselin
-  value: login
+  path: /data
+  value:
+    accounts.salineselin: login
