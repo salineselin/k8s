@@ -7,7 +7,7 @@ spec:
   destination:
     name: homelab
     namespace: external-dns
-  project: core-utilities
+  project: default
   source:
     path: external-dns
     repoURL: https://github.com/salineselin/kube-monorepo
