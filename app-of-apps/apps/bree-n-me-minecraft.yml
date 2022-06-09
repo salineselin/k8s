@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bree-n-me-minecraft
+  namespace: argocd
+spec:
+  destination:
+    name: homelab
+    namespace: bree-n-me-minecraft
+  project: default
+  source:
+    path: minecraft
+    repoURL: https://github.com/salineselin/kube-monorepo
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
