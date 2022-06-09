@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    name: gke
+    name: homelab
     namespace: argocd
   project: core-utilities
   source:

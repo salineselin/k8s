@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx
-  namespace: argocd
+  name: external-dns
+  namespace: external-dns
 spec:
   destination:
-    name: gke
+    name: homelab
     namespace: nginx-ingress
   project: core-utilities
   source:
-    path: nginx
+    path: external-dns
     repoURL: https://github.com/salineselin/kube-monorepo
     targetRevision: HEAD
