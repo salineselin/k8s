@@ -2,3 +2,4 @@ name: k8sImageRegsitry
 runtime: go
 description: A private google container registry
 main: pulumi
+stackConfigDir: pulumi
