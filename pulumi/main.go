@@ -12,7 +12,7 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		// create a container registry
-		reg, err := container.NewRegistry(ctx, "make-registry", &container.RegistryArgs{
+		reg, err := container.NewRegistry(ctx, "registry", &container.RegistryArgs{
 			Location: pulumi.String("US"),
 		})
 		if err != nil {
