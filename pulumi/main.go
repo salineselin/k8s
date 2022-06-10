@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strings"
+
 	"github.com/pulumi/pulumi-gcp/sdk/v6/go/gcp/container"
 	"github.com/pulumi/pulumi-gcp/sdk/v6/go/gcp/serviceaccount"
 	"github.com/pulumi/pulumi-gcp/sdk/v6/go/gcp/storage"
@@ -20,11 +22,8 @@ func main() {
 		// log the container registrys url
 		ctx.Export("registry: ", reg.BucketSelfLink)
 
-		// get the underlying bucket backing the container registry
-		regBucket, err := storage.GetBucket(ctx, "get-registry-bucket", reg.ID().ToIDOutput())
-
 		// Create an admin serviceaccount
-		saName := "salinesel-in-bucket-read"
+		saName := "gcr-admin"
 		sa, err := serviceaccount.NewAccount(ctx, saName, &serviceaccount.AccountArgs{
 			AccountId:   pulumi.String(saName),
 			DisplayName: pulumi.String(saName),
@@ -35,8 +34,10 @@ func main() {
 
 		// bind it to the container registry
 		_, err = storage.NewBucketIAMMember(ctx, "give-sa-bucket-permissions", &storage.BucketIAMMemberArgs{
-			Bucket: regBucket.Name,
-			Role:   pulumi.String("roles/storage.admin"),
+			Role: pulumi.String("roles/storage.admin"),
+			Bucket: reg.BucketSelfLink.ApplyT(func(link string) string {
+				return strings.Split(link, "/v1/b/")[1]
+			}).(pulumi.StringOutput),
 			Member: sa.Email.ApplyT(func(Email string) string {
 				return "serviceAccount:" + Email
 			}).(pulumi.StringOutput),
