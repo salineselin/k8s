@@ -7,12 +7,16 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		_, err := container.NewRegistry(ctx, "registry", &container.RegistryArgs{
+		// create a container registry
+		reg, err := container.NewRegistry(ctx, "registry", &container.RegistryArgs{
 			Location: pulumi.String("US"),
 		})
 		if err != nil {
 			return err
 		}
+
+		// log its url
+		ctx.Export("registry: ", reg.BucketSelfLink)
 		return nil
 	})
 }
