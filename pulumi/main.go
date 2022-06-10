@@ -19,9 +19,6 @@ func main() {
 			return err
 		}
 
-		// log the container registrys url
-		ctx.Export("registry: ", reg.BucketSelfLink)
-
 		// Create an admin serviceaccount
 		saName := "gcr-admin"
 		sa, err := serviceaccount.NewAccount(ctx, saName, &serviceaccount.AccountArgs{
