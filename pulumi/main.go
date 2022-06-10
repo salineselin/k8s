@@ -33,7 +33,7 @@ func main() {
 		_, err = storage.NewBucketIAMMember(ctx, "give-sa-bucket-permissions", &storage.BucketIAMMemberArgs{
 			Role: pulumi.String("roles/storage.admin"),
 			Bucket: reg.BucketSelfLink.ApplyT(func(link string) string {
-				return strings.Split(link, "/v1/b/")[1]
+				return strings.TrimLeft(link, "/")
 			}).(pulumi.StringOutput),
 			Member: sa.Email.ApplyT(func(Email string) string {
 				return "serviceAccount:" + Email
