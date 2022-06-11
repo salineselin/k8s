@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/pulumi/pulumi-gcp/sdk/v6/go/gcp"
 	"github.com/pulumi/pulumi-gcp/sdk/v6/go/gcp/artifactregistry"
+	"github.com/pulumi/pulumi-gcp/sdk/v6/go/gcp/projects"
 	"github.com/pulumi/pulumi-gcp/sdk/v6/go/gcp/serviceaccount"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
@@ -19,13 +20,22 @@ func main() {
 			return err
 		}
 
+		// enable artifact registry api
+		api, err := projects.NewService(ctx, "enable-artifacts-registry-api", &projects.ServiceArgs{
+			DisableDependentServices: pulumi.Bool(true),
+			Service:                  pulumi.String("artifactregistry.googleapis.com"),
+		})
+		if err != nil {
+			return err
+		}
+
 		// create an artifact registry
 		reg, err := artifactregistry.NewRepository(ctx, "saline-selin-artifacts-repo", &artifactregistry.RepositoryArgs{
 			Location:     pulumi.String("us-west3-c"),
 			RepositoryId: pulumi.String("salinesel.in"),
 			Description:  pulumi.String("example docker repository"),
 			Format:       pulumi.String("DOCKER"),
-		}, pulumi.Provider(google_beta))
+		}, pulumi.Provider(google_beta), pulumi.DependsOn([]pulumi.Resource{api}))
 		if err != nil {
 			return err
 		}
