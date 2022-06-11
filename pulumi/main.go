@@ -31,9 +31,9 @@ func main() {
 
 		// create an artifact registry
 		reg, err := artifactregistry.NewRepository(ctx, "saline-selin-artifacts-repo", &artifactregistry.RepositoryArgs{
-			Location:     pulumi.String("us-west3-c"),
+			Location:     pulumi.String("us-west3"),
 			RepositoryId: pulumi.String("salinesel.in"),
-			Description:  pulumi.String("example docker repository"),
+			Description:  pulumi.String("container registry for gcr.salinesel.in"),
 			Format:       pulumi.String("DOCKER"),
 		}, pulumi.Provider(google_beta), pulumi.DependsOn([]pulumi.Resource{api}))
 		if err != nil {
