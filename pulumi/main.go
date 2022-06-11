@@ -5,12 +5,16 @@ import (
 	"github.com/pulumi/pulumi-gcp/sdk/v6/go/gcp/artifactregistry"
 	"github.com/pulumi/pulumi-gcp/sdk/v6/go/gcp/serviceaccount"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 )
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		// add google beta provider
-		google_beta, err := gcp.NewProvider(ctx, "google-beta", &gcp.ProviderArgs{})
+		projectName := config.Get(ctx, "gcp:project")
+		google_beta, err := gcp.NewProvider(ctx, "google-beta", &gcp.ProviderArgs{
+			Project: pulumi.String(projectName),
+		})
 		if err != nil {
 			return err
 		}
@@ -43,7 +47,7 @@ func main() {
 			Member: sa.Email.ApplyT(func(Email string) string {
 				return "serviceAccount:" + Email
 			}).(pulumi.StringOutput),
-		})
+		}, pulumi.Provider(google_beta))
 		if err != nil {
 			return err
 		}
