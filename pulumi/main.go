@@ -30,9 +30,10 @@ func main() {
 		}
 
 		// create an artifact registry
-		reg, err := artifactregistry.NewRepository(ctx, "saline-selin-artifacts-repo", &artifactregistry.RepositoryArgs{
-			Location:     pulumi.String("us-west3"),
-			RepositoryId: pulumi.String("salinesel.in"),
+		location := "us-west3"
+		repo, err := artifactregistry.NewRepository(ctx, "saline-selin-artifacts-repo", &artifactregistry.RepositoryArgs{
+			Location:     pulumi.String(location),
+			RepositoryId: pulumi.String("salinesel-in"),
 			Description:  pulumi.String("container registry for gcr.salinesel.in"),
 			Format:       pulumi.String("DOCKER"),
 		}, pulumi.Provider(google_beta), pulumi.DependsOn([]pulumi.Resource{api}))
@@ -52,7 +53,8 @@ func main() {
 
 		// bind it to the artifact registry
 		_, err = artifactregistry.NewRepositoryIamMember(ctx, "saline-selin-artifacts-binding", &artifactregistry.RepositoryIamMemberArgs{
-			Repository: reg.Name,
+			Location:   pulumi.String(location),
+			Repository: repo.Name,
 			Role:       pulumi.String("roles/artifactregistry.admin"),
 			Member: sa.Email.ApplyT(func(Email string) string {
 				return "serviceAccount:" + Email
