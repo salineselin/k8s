@@ -4,11 +4,11 @@
 # remove the https port
 - op: remove
   path: /spec/ports/1
-# add the cloud network endpoint group annotation
-- op: add
-  path: /metadata/annotations/cloud.google.com~1neg
-  value: '{"ingress": true}'
-# add the backendconfig annotation
-- op: add
-  path: /metadata/annotations/cloud.google.com~1backend-config
-  value: '{"ports": {"http":"argocd-backend-config"}}'
+# # add the cloud network endpoint group annotation
+# - op: add
+#   path: /metadata/annotations/cloud.google.com~1neg
+#   value: '{"ingress": true}'
+# # add the backendconfig annotation
+# - op: add
+#   path: /metadata/annotations/cloud.google.com~1backend-config
+#   value: '{"ports": {"http":"argocd-backend-config"}}'
