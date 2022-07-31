@@ -11,7 +11,7 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 25565
+      port: 42069
       targetPort: 25565
       name: minecraft
   selector:
