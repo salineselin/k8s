@@ -4,7 +4,7 @@ metadata:
   name: bree-n-me-minecraft-pvc
   namespace: bree-n-me-minecraft
 spec:
-  storageClassName: premium-rwo
+  storageClassName: do-block-storage
   accessModes:
     - ReadWriteOnce
   resources:
