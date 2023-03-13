@@ -1,3 +1,0 @@
-config:
-  gcp:project: elite-protocol-319303
-  k8sImageRegsitry:pulumi: ""
