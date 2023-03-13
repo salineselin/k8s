@@ -4,9 +4,9 @@ kind: Kustomization
 namespace: external-dns
 
 bases:
-  - https://raw.githubusercontent.com/kubernetes-sigs/external-dns/master/kustomize/external-dns-clusterrole.yaml
-  - https://raw.githubusercontent.com/kubernetes-sigs/external-dns/master/kustomize/external-dns-clusterrolebinding.yaml
-  - https://raw.githubusercontent.com/kubernetes-sigs/external-dns/master/kustomize/external-dns-deployment.yaml
+  - https://raw.githubusercontent.com/kubernetes-sigs/external-dns/v0.13.2/kustomize/external-dns-clusterrole.yaml
+  - https://raw.githubusercontent.com/kubernetes-sigs/external-dns/v0.13.2/kustomize/external-dns-clusterrolebinding.yaml
+  - https://raw.githubusercontent.com/kubernetes-sigs/external-dns/v0.13.2/kustomize/external-dns-deployment.yaml
   - additions/namespace.yml
   - additions/service-account.yml
 
