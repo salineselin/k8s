@@ -14,7 +14,15 @@
   path: /spec/template/spec/containers/0/env
   value:
     - name: GOOGLE_APPLICATION_CREDENTIALS
-      valueFrom:
-        secretKeyRef:
-          name: external-dns
-          key: jsonkey.json
+      value: /etc/secrets/service-account/credentials.json
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts
+  value:
+    - name: google-service-account
+      mountPath: /etc/secrets/service-account
+- op: add
+  path: /spec/template/spec/volumes
+  value:
+    - name: google-service-account
+      secret:
+        secretName: external-dns
