@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     path: app-of-apps/apps
-    repoURL: https://github.com/salineselin/kube-monorepo
+    repoURL: https://github.com/salineselin/k8s
     targetRevision: HEAD
   syncPolicy:
     automated:
