@@ -6,7 +6,15 @@
   value: "--google-project=elite-protocol-319303"
 - op: add
   path: /spec/template/spec/containers/0/args/-
-  value: "--txt-owner-id=home"
+  value: "--txt-owner-id=cloudlab"
 - op: add
   path: /spec/template/spec/containers/0/image
   value: "k8s.gcr.io/external-dns/external-dns:v0.13.2"
+- op: add
+  path: /spec/template/spec/containers/0/env
+  value:
+    - name: GOOGLE_APPLICATION_CREDENTIALS
+      valueFrom:
+        secretKeyRef:
+          name: external-dns
+          key: jsonkey.json
