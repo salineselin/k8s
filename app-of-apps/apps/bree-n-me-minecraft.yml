@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    name: homelab
+    name: in-cluster
     namespace: bree-n-me-minecraft
   project: default
   source:
