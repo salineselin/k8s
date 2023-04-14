@@ -9,6 +9,8 @@ spec:
     namespace: longhorn
   project: default
   source:
+    directory:
+      exclude: "podsecuritypolicy.yaml"
     path: deploy
     repoURL: https://github.com/longhorn/longhorn
     targetRevision: v1.4.1
