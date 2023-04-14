@@ -6,7 +6,7 @@ metadata:
 spec:
   destination:
     name: in-cluster
-    namespace: longhorn
+    namespace: longhorn-system
   project: default
   source:
     directory:
