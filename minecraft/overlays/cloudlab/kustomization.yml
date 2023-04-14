@@ -5,6 +5,6 @@ namespace: minecraft
 
 bases:
   - namespace.yml
-  - pvc.yml
   - service.yml
   - statefulset.yml
+  - configmap.yml
