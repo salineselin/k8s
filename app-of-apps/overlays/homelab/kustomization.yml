@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
   - rook.yml
+  - minecraft.yml
 
 namespace: argocd

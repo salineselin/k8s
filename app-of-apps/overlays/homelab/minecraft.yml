@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: rooki
+  name: minecraft
   namespace: argocd
 spec:
   destination:
     name: in-cluster
-    namespace: rook
+    namespace: minecraft
   project: default
   source:
-    path: deploy/examples
-    repoURL: https://github.com/rook/rook
-    targetRevision: v1.11.4
+    path: minecraft/homelab
+    repoURL: https://github.com/salineselin/k8s
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
