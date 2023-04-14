@@ -7,3 +7,4 @@ bases:
   - namespace.yml
   - service.yml
   - statefulset.yml
+  - configmap.yml

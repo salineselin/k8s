@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minecraft-cm
+  namespace: minecraft
+data:
+  EULA: "true"
+  TYPE: VANILLA
+  VERSION: LATEST
+  DIFFICULTY: easy
+  WHITELIST: ""
+  OPS: ""
+  ICON: ""
+  MAX_PLAYERS: "20"
+  MAX_WORLD_SIZE: "10000"
+  ALLOW_NETHER: "true"
+  ANNOUNCE_PLAYER_ACHIEVEMENTS: "true"
+  ENABLE_COMMAND_BLOCK: "true"
+  FORCE_GAMEMODE: "false"
+  GENERATE_STRUCTURES: "true"
+  HARDCORE: "false"
+  MAX_BUILD_HEIGHT: "256"
+  MAX_TICK_TIME: "60000"
+  SPAWN_ANIMALS: "true"
+  SPAWN_MONSTERS: "true"
+  SPAWN_NPCS: "true"
+  SPAWN_PROTECTION: "16"
+  VIEW_DISTANCE: 10"
+  SEED: ""
+  MODE: survival
+  MOTD: hi bb
+  PVP: "false"
+  LEVEL_TYPE: DEFAULT
+  GENERATOR_SETTINGS: ""
+  LEVEL: world
+  ONLINE_MODE: "true"
+  MEMORY: 8192M
+  JVM_OPTS: ""
+  JVM_XX_OPTS: ""
+  OVERRIDE_SERVER_PROPERTIES: "false"
+  ENABLE_RCON: "false"
