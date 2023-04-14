@@ -52,6 +52,9 @@ spec:
             - name: minecraft
               containerPort: 25565
               protocol: TCP
+          volumeMounts:
+            - name: minecraft-pvc
+              mountPath: /data
   volumeClaimTemplates:
     - metadata:
         name: minecraft-pvc
