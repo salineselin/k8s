@@ -4,7 +4,7 @@ metadata:
   name: minecraft-svc
   namespace: minecraft
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 42069
       targetPort: 25565
