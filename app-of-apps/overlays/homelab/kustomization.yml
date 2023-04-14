@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
   - minecraft.yml
+  - longhorn.yml
 
 namespace: argocd

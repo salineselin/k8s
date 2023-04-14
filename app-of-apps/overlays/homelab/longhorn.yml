@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: longhorn
+  project: default
+  source:
+    path: deploy
+    repoURL: https://github.com/longhorn/longhorn
+    targetRevision: v1.4.1
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
