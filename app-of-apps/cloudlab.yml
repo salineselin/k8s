@@ -9,7 +9,7 @@ spec:
     namespace: argocd
   project: default
   source:
-    path: app-of-apps/apps
+    path: app-of-apps/overlays/cloudlab
     repoURL: https://github.com/salineselin/k8s
     targetRevision: HEAD
   syncPolicy:

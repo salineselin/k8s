@@ -1,20 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bree-n-me-minecraft
+  name: app-of-apps
   namespace: argocd
 spec:
   destination:
     name: in-cluster
-    namespace: bree-n-me-minecraft
+    namespace: argocd
   project: default
   source:
-    path: minecraft
+    path: app-of-apps/overlays/homelab
     repoURL: https://github.com/salineselin/k8s
     targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
