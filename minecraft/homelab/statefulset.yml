@@ -28,7 +28,7 @@ spec:
               memory: 4096Mi
             limits:
               cpu: 1024m
-              memory: 8192Mi
+              memory: 12288Mi
           readinessProbe:
             tcpSocket:
               port: 25565
