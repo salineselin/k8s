@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vintagestory-svc
+  namespace: vintagestory
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 42070
+      targetPort: 25565
+      name: vintagestory
+  selector:
+    app: vintagestory

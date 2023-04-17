@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vintagestory-cm
+  namespace: vintagestory
+data:
+  UID: "99"
+  GID: "100"
+  UMASK: "000"
+  DATA_PERM: "770"
