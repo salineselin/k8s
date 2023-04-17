@@ -7,7 +7,7 @@ spec:
   type: LoadBalancer
   ports:
     - port: 42420
-      targetPort: 25565
+      targetPort: 42420
       name: vintagestory
   selector:
     app: vintagestory
