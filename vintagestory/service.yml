@@ -6,7 +6,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 42070
+    - port: 42420
       targetPort: 25565
       name: vintagestory
   selector:
