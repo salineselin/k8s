@@ -53,7 +53,7 @@ spec:
               containerPort: 42420
               protocol: TCP
           volumeMounts:
-            - name: vintagestory-data-pvc
+            - name: vintagestory-pvc
               mountPath: /vintagestory/data
   volumeClaimTemplates:
     - metadata:
