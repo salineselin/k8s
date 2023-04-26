@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: vintagestory
-          image: "ich777/vintagestory"
+          image: ich777/vintagestory
           imagePullPolicy: IfNotPresent
           resources:
             requests:
