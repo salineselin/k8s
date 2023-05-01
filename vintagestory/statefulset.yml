@@ -27,7 +27,7 @@ spec:
               cpu: 512m
               memory: 4Gi
             limits:
-              cpu: 1024m
+              cpu: 2048m
               memory: 24Gi
           readinessProbe:
             tcpSocket:
