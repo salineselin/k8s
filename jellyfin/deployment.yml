@@ -31,14 +31,17 @@ spec:
         - name: jellyfin
           image: jellyfin/jellyfin:latest
           imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: jellyfin-env
           ports:
             - containerPort: 8096
               protocol: TCP
           volumeMounts:
             - name: jellyfin-cache
               mountPath: /cache
-            # - name: jellyfin-config
-            #   mountPath: /config
+            - name: jellyfin-config
+              mountPath: /config
             - name: jellyfin-media
               mountPath: /media
       restartPolicy: Always
@@ -46,12 +49,9 @@ spec:
         - name: jellyfin-cache
           persistentVolumeClaim:
             claimName: jellyfin-cache
-        # - name: jellyfin-config
-        #   configMap:
-        #     name: jellyfin-config
-        #     items:
-        #       - key: jellyfinconfig
-        #         path: jellyfinconfig
+        - name: jellyfin-config
+          persistentVolumeClaim:
+            claimName: jellyfin-config
         - name: jellyfin-media
           persistentVolumeClaim:
             claimName: jellyfin-media
@@ -73,11 +73,10 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: jellyfin-config
+  name: jellyfin-env
   namespace: jellyfin
 data:
-  jellyfinconfig: |
-    key: value
+  key: value
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -92,6 +91,22 @@ spec:
   resources:
     requests:
       storage: 10Gi
+  storageClassName: longhorn
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: jellyfin
+  name: jellyfin-config
+  namespace: jellyfin
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
   storageClassName: longhorn
   volumeMode: Filesystem
 ---
