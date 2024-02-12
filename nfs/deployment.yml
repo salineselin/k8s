@@ -1,0 +1,35 @@
+# source: https://github.com/appscode/third-party-tools/blob/master/storage/nfs/README.md
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfs
+  namespace: nfs
+spec:
+  selector:
+    matchLabels:
+      app: nfs
+  template:
+    metadata:
+      labels:
+        app: nfs
+    spec:
+      containers:
+        - name: nfs
+          image: k8s.gcr.io/volume-nfs:0.8
+          ports:
+            - name: nfs
+              containerPort: 2049
+            - name: mountd
+              containerPort: 20048
+            - name: rpcbind
+              containerPort: 111
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: storage
+              mountPath: /exports
+      volumes:
+        - name: storage
+          hostPath:
+            path: /data/nfs # store all data in "/data/nfs" directory of the node where it is running
+            type: DirectoryOrCreate # if the directory does not exist then create it
