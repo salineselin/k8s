@@ -26,9 +26,15 @@ spec:
           securityContext:
             privileged: true
           volumeMounts:
-            - name: nfs-pvc
-              mountPath: /exports
+            # - name: nfs-pvc
+            #   mountPath: /exports
+            - name: storage
+              mountPath: /data/nfs
       volumes:
-        - name: nfs-pvc
-          persistentVolumeClaim:
-            claimName: nfs-pvc
+        # - name: nfs-pvc
+        #   persistentVolumeClaim:
+        #     claimName: nfs-pvc
+        - name: storage
+          hostPath:
+            path: /data/nfs
+            type: DirectoryOrCreate
