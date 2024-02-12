@@ -26,10 +26,10 @@ spec:
           securityContext:
             privileged: true
           volumeMounts:
-            - name: storage
+            - name: nfs-pvc
               mountPath: /exports
       volumes:
-        - name: storage
-          hostPath:
-            path: /data/nfs # store all data in "/data/nfs" directory of the node where it is running
-            type: DirectoryOrCreate # if the directory does not exist then create it
+        - name: nfs-pvc
+          persistentVolumeClaim:
+            claimName: nfs-pvc
+          mountPath: /data/nfs

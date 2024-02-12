@@ -6,3 +6,4 @@ namespace: minecraft
 bases:
   - deployment.yml
   - service.yml
+  - pvc.yml
