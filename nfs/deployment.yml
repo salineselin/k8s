@@ -32,4 +32,3 @@ spec:
         - name: nfs-pvc
           persistentVolumeClaim:
             claimName: nfs-pvc
-          mountPath: /data/nfs
