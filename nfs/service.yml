@@ -13,3 +13,4 @@ spec:
       port: 111
   selector:
     app: nfs
+  clusterIP: 10.43.12.13

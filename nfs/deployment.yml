@@ -16,6 +16,7 @@ spec:
       containers:
         - name: nfs
           image: k8s.gcr.io/volume-nfs:0.8
+          imagePullPolicy: IfNotPresent
           ports:
             - name: nfs
               containerPort: 2049
@@ -26,15 +27,12 @@ spec:
           securityContext:
             privileged: true
           volumeMounts:
-            # - name: nfs-pvc
-            #   mountPath: /exports
-            - name: storage
-              mountPath: /data/nfs
+            - name: nfs-pvc
+              mountPath: /exports
+          command:
+            - "/usr/local/bin/run_nfs.sh"
+            - "/exports"
       volumes:
-        # - name: nfs-pvc
-        #   persistentVolumeClaim:
-        #     claimName: nfs-pvc
-        - name: storage
-          hostPath:
-            path: /data/nfs
-            type: DirectoryOrCreate
+        - name: nfs-pvc
+          persistentVolumeClaim:
+            claimName: nfs-pvc
