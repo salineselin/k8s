@@ -38,23 +38,11 @@ spec:
             - containerPort: 8096
               protocol: TCP
           volumeMounts:
-            - name: cache
-              mountPath: /cache
-            - name: config
-              mountPath: /config
-            - name: media
-              mountPath: /media
+            - name: jellyfin
+              mountPath: /data
       restartPolicy: Always
       volumes:
-        - name: cache
+        - name: jellyfin
           nfs:
             server: 10.43.12.13 # icky but necessary for nfs to work. cannot reference dns name
-            path: /jellyfin/cache
-        - name: config
-          nfs:
-            server: 10.43.12.13 # icky but necessary for nfs to work. cannot reference dns name
-            path: /jellyfin/config
-        - name: media
-          nfs:
-            server: 10.43.12.13 # icky but necessary for nfs to work. cannot reference dns name
-            path: /jellyfin/media
+            path: /jellyfin
