@@ -30,7 +30,7 @@ spec:
       containers:
         - name: jellyfin
           image: jellyfin/jellyfin:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
                 name: jellyfin-env
@@ -38,90 +38,23 @@ spec:
             - containerPort: 8096
               protocol: TCP
           volumeMounts:
-            - name: jellyfin-cache
+            - name: cache
               mountPath: /cache
-            - name: jellyfin-config
+            - name: config
               mountPath: /config
-            - name: jellyfin-media
+            - name: media
               mountPath: /media
       restartPolicy: Always
       volumes:
-        - name: jellyfin-cache
-          persistentVolumeClaim:
-            claimName: jellyfin-cache
-        - name: jellyfin-config
-          persistentVolumeClaim:
-            claimName: jellyfin-config
-        - name: jellyfin-media
-          persistentVolumeClaim:
-            claimName: jellyfin-media
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: jellyfin-svc
-  namespace: jellyfin
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 8096
-      targetPort: 8096
-      name: jellyfin
-  selector:
-    app: jellyfin
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: jellyfin-env
-  namespace: jellyfin
-data:
-  key: value
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  labels:
-    app: jellyfin
-  name: jellyfin-cache
-  namespace: jellyfin
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-  storageClassName: longhorn
-  volumeMode: Filesystem
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  labels:
-    app: jellyfin
-  name: jellyfin-config
-  namespace: jellyfin
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: longhorn
-  volumeMode: Filesystem
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  labels:
-    app: jellyfin
-  name: jellyfin-media
-  namespace: jellyfin
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
-  storageClassName: longhorn
-  volumeMode: Filesystem
+        - name: cache
+          nfs:
+            server: 10.43.12.13 # icky but necessary for nfs to work. cannot reference dns name
+            path: /jellyfin/cache
+        - name: config
+          nfs:
+            server: 10.43.12.13 # icky but necessary for nfs to work. cannot reference dns name
+            path: /jellyfin/config
+        - name: media
+          nfs:
+            server: 10.43.12.13 # icky but necessary for nfs to work. cannot reference dns name
+            path: /jellyfin/media

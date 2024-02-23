@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jellyfin-env
+  namespace: jellyfin
+data:
+  key: value
