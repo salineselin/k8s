@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+  labels:
+    app: sonarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      terminationGracePeriodSeconds: 0
+      initContainers:
+        # necessary to take ownership of the nfs mount to trick the local container into writing to it as the abc user
+        # these permission changes are not visible on the nfs side of things
+        - name: fix-nfs-permissions
+          image: busybox
+          command:
+            - "/bin/sh"
+            - "-c"
+            - "chgrp abc /data -R && chown abc /data -R"
+      containers:
+        - name: vpn
+          image: ghcr.io/bubuntux/nordvpn
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - NET_RAW
+          envFrom:
+            - secretRef:
+                name: vpn
+            - configMapRef:
+                name: vpn
+        - name: sonarr
+          image: lscr.io/linuxserver/sonarr:latest
+          # # check if the vpn is still connected and if it isn't kill the pod
+          # # should probably find a better way to validate vpn connectivity
+          # livenessProbe:
+          #   periodSeconds: 30
+          #   initialDelaySeconds: 10
+          #   exec:
+          #     command:
+          #       - /bin/bash
+          #       - -c
+          #       - if [ $(curl ipinfo.io | jq ".city") = '"Helsinki"' ]; then exit 1; fi
+          # command:
+          #   - /bin/bash
+          #   - -c
+          #   - sleep 20 && . /init
+          envFrom:
+            - configMapRef:
+                name: sonarr
+          ports:
+            - containerPort: 8989
+              protocol: TCP
+          volumeMounts:
+            - name: sonarr
+              mountPath: /config
+            - name: shows
+              mountPath: /data/shows
+      volumes:
+        - name: shows
+          nfs:
+            path: /media
+            server: 10.43.12.13 # works10.43.24.86 # maybe 10.0.2.216
+        - name: sonarr
+          nfs:
+            path: /sonarr
+            server: 10.43.12.13 # works10.43.24.86 # maybe 10.0.2.216

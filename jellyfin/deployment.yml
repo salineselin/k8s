@@ -40,9 +40,15 @@ spec:
           volumeMounts:
             - name: jellyfin
               mountPath: /data
+            - name: media
+              mountPath: /media
       restartPolicy: Always
       volumes:
         - name: jellyfin
           nfs:
             server: 10.43.12.13 # icky but necessary for nfs to work. cannot reference dns name
             path: /jellyfin
+        - name: media
+          nfs:
+            server: 10.43.12.13 # icky but necessary for nfs to work. cannot reference dns name
+            path: /media
