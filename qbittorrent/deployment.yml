@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+  labels:
+    app: qbittorrent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qbittorrent
+  template:
+    metadata:
+      labels:
+        app: qbittorrent
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: qbittorrent
+          image: linuxserver/qbittorrent:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: qbittorrent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: downloads
+              mountPath: /downloads
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          nfs:
+            path: /arr/configs/qbittorrent
+            server: 10.43.12.13
+        - name: downloads
+          nfs:
+            path: /arr/downloads
+            server: 10.43.12.13
