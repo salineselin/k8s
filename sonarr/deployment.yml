@@ -14,45 +14,9 @@ spec:
       labels:
         app: sonarr
     spec:
-      terminationGracePeriodSeconds: 0
-      initContainers:
-        # necessary to take ownership of the nfs mount to trick the local container into writing to it as the abc user
-        # these permission changes are not visible on the nfs side of things
-        - name: fix-nfs-permissions
-          image: busybox
-          command:
-            - "/bin/sh"
-            - "-c"
-            - "chgrp abc /data -R && chown abc /data -R"
       containers:
-        - name: vpn
-          image: ghcr.io/bubuntux/nordvpn
-          securityContext:
-            capabilities:
-              add:
-                - NET_ADMIN
-                - NET_RAW
-          envFrom:
-            - secretRef:
-                name: vpn
-            - configMapRef:
-                name: vpn
         - name: sonarr
           image: lscr.io/linuxserver/sonarr:latest
-          # # check if the vpn is still connected and if it isn't kill the pod
-          # # should probably find a better way to validate vpn connectivity
-          # livenessProbe:
-          #   periodSeconds: 30
-          #   initialDelaySeconds: 10
-          #   exec:
-          #     command:
-          #       - /bin/bash
-          #       - -c
-          #       - if [ $(curl ipinfo.io | jq ".city") = '"Helsinki"' ]; then exit 1; fi
-          # command:
-          #   - /bin/bash
-          #   - -c
-          #   - sleep 20 && . /init
           envFrom:
             - configMapRef:
                 name: sonarr
