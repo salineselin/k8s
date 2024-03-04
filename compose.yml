@@ -1,0 +1,81 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - C:/Users/Selin/data/configs/jellyfin:/config
+      - C:/Users/Selin/data/cache/jellyfin:/cache
+      - C:/Users/Selin/data/media:/data
+    ports:
+      - 8096:8096
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - C:/Users/Selin/data/configs/sonarr:/config
+      - C:/Users/Selin/data/media/tv:/tv
+      - C:/Users/Selin/data/torrents/tv:/downloads #optional
+    restart: unless-stopped
+    network_mode: container:gluetun
+    # networks:
+    #   - arr
+    depends_on:
+      - gluetun
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 6081:6881
+      - 6081:6881/udp
+      - 6011:6011
+      - 8989:8989
+    environment:
+      - VPN_SERVICE_PROVIDER=mullvad
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=OOFcA1MqGjOJfFYC8pbfSWUm17ULHlrQC6yiDt8UNFU=
+      - WIREGUARD_ADDRESSES=10.64.82.38/32
+      - SERVER_CITIES=Stockholm
+    volumes:
+      - /Home/Docker/Gluetun:/gluetun
+    restart: unless-stopped
+  #   # networks:
+  #   #   - arr
+  qbittorrent:
+    image: ghcr.io/linuxserver/qbittorrent
+    container_name: qbittorrent
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Madrid
+      WEBUI_PORT: 6011
+    volumes:
+      - /home/Docker/qbittorrent/config:/config
+      - /home/Downloads:/downloads
+    network_mode: container:gluetun
+    restart: unless-stopped
+    # ports:
+    #   - 6011:6011
+    # networks:
+    #   - arr
+    depends_on:
+      - gluetun
+  # curl:
+  #   image: curlimages/curl:latest
+  #   container_name: curl
+  #   stdin_open: true
+  #   tty: true
+  #   command: sleep 300
+  # network_mode: container:gluetun
+#     networks:
+#       - arr
+# networks:
+#   arr:
+#     name: arr
+#     external: true
