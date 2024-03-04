@@ -22,8 +22,6 @@ services:
       - C:/Users/Selin/data/torrents/tv:/downloads #optional
     restart: unless-stopped
     network_mode: container:gluetun
-    # networks:
-    #   - arr
     depends_on:
       - gluetun
   gluetun:
@@ -45,8 +43,6 @@ services:
     volumes:
       - /Home/Docker/Gluetun:/gluetun
     restart: unless-stopped
-  #   # networks:
-  #   #   - arr
   qbittorrent:
     image: ghcr.io/linuxserver/qbittorrent
     container_name: qbittorrent
@@ -60,22 +56,5 @@ services:
       - /home/Downloads:/downloads
     network_mode: container:gluetun
     restart: unless-stopped
-    # ports:
-    #   - 6011:6011
-    # networks:
-    #   - arr
     depends_on:
       - gluetun
-  # curl:
-  #   image: curlimages/curl:latest
-  #   container_name: curl
-  #   stdin_open: true
-  #   tty: true
-  #   command: sleep 300
-  # network_mode: container:gluetun
-#     networks:
-#       - arr
-# networks:
-#   arr:
-#     name: arr
-#     external: true
