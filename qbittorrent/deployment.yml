@@ -21,6 +21,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: vpn
+            - secretRef:
+                name: vpn
           securityContext:
             privileged: true
             capabilities:
