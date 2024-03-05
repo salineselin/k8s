@@ -13,7 +13,7 @@ spec:
       exclude: "podsecuritypolicy.yaml"
     path: deploy
     repoURL: https://github.com/longhorn/longhorn
-    targetRevision: v1.5.0
+    targetRevision: v1.6.0
   syncPolicy:
     automated:
       prune: false
