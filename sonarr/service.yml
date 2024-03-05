@@ -3,11 +3,10 @@ kind: Service
 metadata:
   name: sonarr
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - port: 8989
+    - port: 8081
       targetPort: 8989
-      nodePort: 32123
       name: sonarr
   selector:
     app: sonarr

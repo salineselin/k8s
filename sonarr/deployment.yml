@@ -24,16 +24,16 @@ spec:
             - containerPort: 8989
               protocol: TCP
           volumeMounts:
-            - name: sonarr
+            - name: config
               mountPath: /config
             - name: shows
-              mountPath: /data/shows
+              mountPath: /shows
       volumes:
         - name: shows
           nfs:
-            path: /media
+            path: /arr/media/shows
             server: 10.43.12.13 # works10.43.24.86 # maybe 10.0.2.216
-        - name: sonarr
+        - name: config
           nfs:
-            path: /sonarr
+            path: /arr/configs/sonarr
             server: 10.43.12.13 # works10.43.24.86 # maybe 10.0.2.216
