@@ -16,6 +16,18 @@ spec:
     spec:
       terminationGracePeriodSeconds: 0
       containers:
+        - name: gluetun
+          image: qmcgaw/gluetun
+          envFrom:
+            - configMapRef:
+                name: vpn
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - NET_ADMIN
+                - NET_RAW
+                - SYS_MODULE
         - name: qbittorrent
           image: linuxserver/qbittorrent:latest
           imagePullPolicy: IfNotPresent
@@ -25,6 +37,10 @@ spec:
           ports:
             - containerPort: 8080
               protocol: TCP
+            - containerPort: 6881
+              protocol: TCP
+            - containerPort: 6881
+              protocol: UDP
           volumeMounts:
             - name: downloads
               mountPath: /downloads

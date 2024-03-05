@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: vpn
 data:
-  CONNECT: Finland
-  TECHNOLOGY: NordLynx
-  NETWORK: 10.42.0.0/16
+  VPN_SERVICE_PROVIDER: mullvad
+  VPN_TYPE: wireguard
+  WIREGUARD_ADDRESSES: 10.65.27.41/32
+  SERVER_CITIES: Stockholm
