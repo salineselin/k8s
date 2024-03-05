@@ -57,6 +57,3 @@ spec:
           nfs:
             path: /arr/downloads
             server: 10.43.12.13
-
-kubectl cp ./qbittorrent/ qbittorrent-749955449d-vwzk6:/stuff -n qbittorrent
-kubectl cp ~/qbittorrent.tar.gz nfs-b74cb4db5-59svm:/qbittorrent.tar.gz
