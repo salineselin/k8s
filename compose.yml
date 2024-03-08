@@ -1,14 +1,17 @@
 services:
+  # displays downloaded media for the user
   jellyfin:
     image: jellyfin/jellyfin
     container_name: jellyfin
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - C:/Users/Selin/data/configs/jellyfin:/config
-      - C:/Users/Selin/data/cache/jellyfin:/cache
-      - C:/Users/Selin/data/media:/data
+      - D:/configs/jellyfin:/config
+      - D:/data/cache/jellyfin:/cache
+      - D:/data/media:/data
     ports:
       - 8096:8096
+
+  # tells qbittorrent what to download and where to put it
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -17,24 +20,25 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - C:/Users/Selin/data/configs/sonarr:/config
-      - C:/Users/Selin/data/media/tv:/tv
-      - C:/Users/Selin/data/torrents:/downloads #optional
+      - D:/data:/data
+      - D:/configs/sonarr:/config
     restart: unless-stopped
     network_mode: container:gluetun
     depends_on:
       - gluetun
+
+  # secures services that need a vpn
   gluetun:
     image: qmcgaw/gluetun
     container_name: gluetun
     cap_add:
       - NET_ADMIN
     ports:
-      - 6081:6881
-      - 6081:6881/udp
-      - 6011:6011
-      - 8989:8989
-      - 8585:8080
+      - 6081:6881 # qbittorrent tcp
+      - 6081:6881/udp # qbittorrent udp
+      - 6011:6011 # qbittorrent ui
+      - 8989:8989 # sonarr
+      - 8585:8080 # sabnzbd
     environment:
       - VPN_SERVICE_PROVIDER=mullvad
       - VPN_TYPE=wireguard
@@ -44,6 +48,8 @@ services:
     volumes:
       - /Home/Docker/Gluetun:/gluetun
     restart: unless-stopped
+
+  # acts as a torrent client
   qbittorrent:
     image: ghcr.io/linuxserver/qbittorrent
     container_name: qbittorrent
@@ -53,12 +59,14 @@ services:
       TZ: Europe/Madrid
       WEBUI_PORT: 6011
     volumes:
-      - C:/Users/Selin/data/configs/qbittorrent:/config
-      - C:/Users/Selin/data/torrents:/downloads
+      - D:/data:/data
+      - D:/configs/qbittorrent:/config
     network_mode: container:gluetun
     restart: unless-stopped
     depends_on:
       - gluetun
+
+  # acts as a usenet client
   sabnzbd:
     image: lscr.io/linuxserver/sabnzbd:latest
     container_name: sabnzbd
@@ -67,10 +75,27 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - C:/Users/Selin/data/configs/sabnzbd:/config
-      - C:/Users/Selin/data/sabnzbd/downloads:/downloads #optional
-      - C:/Users/Selin/data/sabnzbd/incomplete:/incomplete-downloads #optional
+      - D:/configs/sabnzbd:/config
+      - D:/data:/data
     restart: unless-stopped
     network_mode: container:gluetun
     depends_on:
       - gluetun
+
+  # searches indexes
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - D:/configs/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    networks:
+      default:
+        aliases:
+          - prowlarr
