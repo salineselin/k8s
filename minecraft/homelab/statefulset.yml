@@ -18,6 +18,15 @@ spec:
       labels:
         app: minecraft
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: "kubernetes.io/hostname"
+                    operator: In
+                    values:
+                      - 1node
       containers:
         - name: minecraft
           image: "itzg/minecraft-server:latest"
@@ -27,24 +36,24 @@ spec:
               cpu: 512m
               memory: 4096Mi
             limits:
-              cpu: 1024m
-              memory: 12288Mi
+              cpu: 2048m
+              memory: 12000Mi
           readinessProbe:
             tcpSocket:
               port: 25565
             initialDelaySeconds: 30
-            periodSeconds: 5
+            periodSeconds: 30
             failureThreshold: 10
             successThreshold: 1
-            timeoutSeconds: 1
+            timeoutSeconds: 10
           livenessProbe:
             tcpSocket:
               port: 25565
             initialDelaySeconds: 30
-            periodSeconds: 5
+            periodSeconds: 30
             failureThreshold: 10
             successThreshold: 1
-            timeoutSeconds: 1
+            timeoutSeconds: 10
           envFrom:
             - configMapRef:
                 name: minecraft-cm
