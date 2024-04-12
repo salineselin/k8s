@@ -14,9 +14,19 @@ spec:
       labels:
         app: sonarr
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: "kubernetes.io/hostname"
+                    operator: In
+                    values:
+                      - 2node
       containers:
         - name: sonarr
           image: lscr.io/linuxserver/sonarr:latest
+          imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
                 name: sonarr
@@ -32,14 +42,18 @@ spec:
               mountPath: /downloads
       volumes:
         - name: shows
-          nfs:
+          hostPath:
             path: /arr/media/shows
-            server: 10.43.12.13
+          # nfs:
+          #   path: /arr/media/shows
+          #   server: 10.43.12.13
         - name: config
           nfs:
             path: /arr/configs/sonarr
             server: 10.43.12.13
         - name: downloads
-          nfs:
+          hostPath:
             path: /arr/downloads
-            server: 10.43.12.13
+          # nfs:
+          #   path: /arr/downloads
+          #   server: 10.43.12.13

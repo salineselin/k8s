@@ -27,6 +27,15 @@ spec:
       labels:
         app: jellyfin
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: "kubernetes.io/hostname"
+                    operator: In
+                    values:
+                      - 2node
       containers:
         - name: jellyfin
           image: jellyfin/jellyfin:latest
@@ -38,17 +47,25 @@ spec:
             - containerPort: 8096
               protocol: TCP
           volumeMounts:
-            - name: jellyfin
+            - name: data
               mountPath: /data
+            - name: config
+              mountPath: /config
             - name: media
               mountPath: /media
       restartPolicy: Always
       volumes:
-        - name: jellyfin
+        - name: data
           nfs:
             server: 10.43.12.13 # icky but necessary for nfs to work. cannot reference dns name
-            path: /jellyfin
+            path: /arr/data
+        - name: config
+          nfs:
+            server: 10.43.12.13 # icky but necessary for nfs to work. cannot reference dns name
+            path: /arr/configs/jellyfin
         - name: media
-          nfs:
-            server: 10.43.12.13 # icky but necessary for nfs to work. cannot reference dns name
-            path: /media
+          hostPath:
+            path: /arr/media
+          # nfs:
+          #   server: 10.43.12.13 # icky but necessary for nfs to work. cannot reference dns name
+          #   path: /arr/media

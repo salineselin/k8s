@@ -24,6 +24,9 @@ spec:
                     values:
                       - 2node
       terminationGracePeriodSeconds: 0
+      dnsConfig:
+        nameservers:
+          - "10.64.0.1"
       containers:
         - name: gluetun
           image: qmcgaw/gluetun
@@ -42,6 +45,8 @@ spec:
         - name: qbittorrent
           image: linuxserver/qbittorrent:latest
           imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
           envFrom:
             - configMapRef:
                 name: qbittorrent
@@ -63,6 +68,8 @@ spec:
             path: /arr/configs/qbittorrent
             server: 10.43.12.13
         - name: downloads
-          nfs:
+          hostPath:
             path: /arr/downloads
-            server: 10.43.12.13
+        #   nfs:
+        #     path: /arr/downloads
+        #     server: 10.43.12.13
