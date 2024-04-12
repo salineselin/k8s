@@ -5,7 +5,8 @@ metadata:
   namespace: minecraft
 data:
   EULA: "true"
-  TYPE: VANILLA
+  TYPE: SPIGOT
+  # SPIGET_RESOURCES: "18494,81297"
   VERSION: LATEST
   DIFFICULTY: easy
   WHITELIST: ""
@@ -25,17 +26,17 @@ data:
   SPAWN_MONSTERS: "true"
   SPAWN_NPCS: "true"
   SPAWN_PROTECTION: "16"
-  VIEW_DISTANCE: 10"
+  VIEW_DISTANCE: "32"
   SEED: ""
   MODE: survival
   MOTD: eepy disease
-  PVP: "false"
+  PVP: "true"
   LEVEL_TYPE: DEFAULT
   GENERATOR_SETTINGS: ""
   LEVEL: world
   ONLINE_MODE: "true"
-  MEMORY: 12000M
+  MEMORY: 48000M
   JVM_OPTS: ""
   JVM_XX_OPTS: ""
-  OVERRIDE_SERVER_PROPERTIES: "false"
+  OVERRIDE_SERVER_PROPERTIES: "true"
   ENABLE_RCON: "false"

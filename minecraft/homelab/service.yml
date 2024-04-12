@@ -9,5 +9,9 @@ spec:
     - port: 42069
       targetPort: 25565
       name: minecraft
+    - port: 19132
+      targetPort: 19132
+      name: bedrock
+      protocol: UDP
   selector:
     app: minecraft

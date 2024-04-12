@@ -26,7 +26,7 @@ spec:
                   - key: "kubernetes.io/hostname"
                     operator: In
                     values:
-                      - 1node
+                      - 3node
       containers:
         - name: minecraft
           image: "itzg/minecraft-server:latest"
@@ -36,8 +36,8 @@ spec:
               cpu: 512m
               memory: 4096Mi
             limits:
-              cpu: 2048m
-              memory: 12000Mi
+              cpu: 4096m
+              memory: 48000Mi
           readinessProbe:
             tcpSocket:
               port: 25565
@@ -61,6 +61,9 @@ spec:
             - name: minecraft
               containerPort: 25565
               protocol: TCP
+            - name: mc-bedrock
+              containerPort: 19132
+              protocol: UDP
           volumeMounts:
             - name: minecraft-pvc
               mountPath: /data
