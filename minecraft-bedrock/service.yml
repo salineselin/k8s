@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: minecraft-bedrock-svc
+  namespace: minecraft-bedrock
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 19132
+      targetPort: 19132
+      name: bedrock
+      protocol: UDP
+  selector:
+    app: minecraft-bedrock

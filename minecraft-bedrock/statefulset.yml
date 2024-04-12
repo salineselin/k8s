@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minecraft-bedrock
+  namespace: minecraft-bedrock
+  labels:
+    app: minecraft-bedrock
+spec:
+  serviceName: minecraft-bedrock-svc
+  replicas: 1
+  updateStrategy:
+    type: OnDelete
+  selector:
+    matchLabels:
+      app: minecraft-bedrock
+  template:
+    metadata:
+      labels:
+        app: minecraft-bedrock
+    spec:
+      containers:
+        - name: minecraft-bedrock
+          image: "itzg/minecraft-bedrock-server"
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 512m
+              memory: 4096Mi
+            limits:
+              cpu: 2048m
+              memory: 12000Mi
+          # readinessProbe:
+          #   tcpSocket:
+          #     port: 19132
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 30
+          #   failureThreshold: 10
+          #   successThreshold: 1
+          #   timeoutSeconds: 10
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: 19132
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 30
+          #   failureThreshold: 10
+          #   successThreshold: 1
+          #   timeoutSeconds: 10
+          envFrom:
+            - configMapRef:
+                name: minecraft-bedrock-cm
+          ports:
+            - name: bedrock
+              containerPort: 19132
+              protocol: UDP
+          volumeMounts:
+            - name: minecraft-bedrock-pvc
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: minecraft-bedrock-pvc
+      spec:
+        storageClassName: longhorn
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 3Gi
