@@ -6,6 +6,9 @@ metadata:
 data:
   EULA: "true"
   TYPE: SPIGOT
+  PLUGINS: |
+    https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
+    https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
   # SPIGET_RESOURCES: "18494,81297"
   VERSION: LATEST
   DIFFICULTY: easy
@@ -27,6 +30,7 @@ data:
   SPAWN_NPCS: "true"
   SPAWN_PROTECTION: "16"
   VIEW_DISTANCE: "32"
+  RENDER_DISTANCE: "32"
   SEED: ""
   MODE: survival
   MOTD: eepy disease
